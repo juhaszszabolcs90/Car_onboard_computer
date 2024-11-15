@@ -1,4 +1,5 @@
 <script>
+  import checkEngineImage from './favicon-32x32.png'; // Importáljuk a képet
   let modes = ["normal"]; // Kezdő üzemmód
   let availableModes = ["eco", "sport"]; // Hozzáadható üzemmódok
 
@@ -10,7 +11,19 @@
   <h1>Autó fedélzeti számítógép</h1>
   <div class="modes-container">
       {#each modes as mode}
-          <button class="mode-button">{mode}</button>
+          <button class="mode-button">
+            {#if mode === "normal"}
+                <!-- Ha a "normal" mód van, megjelenítjük a képet -->
+                <img src={checkEngineImage} alt="Check engine" class="icon" />
+            {:else if mode === "eco"}
+                <!-- Ha az "eco" mód van, megjelenítjük az ikonot -->   
+                <img src={checkEngineImage} alt="Check engine" class="icon" />
+            {:else if mode === "sport"}
+                <!-- Ha a "sport" mód van, megjelenítjük az ikonot -->
+                <img src={checkEngineImage} alt="Check engine" class="icon" />
+            {/if}
+        {mode}
+    </button>
       {/each}
       <!-- Csak akkor jelenjen meg a "+" gomb, ha kevesebb mint 3 üzemmód van -->
       {#if canAddMore}
