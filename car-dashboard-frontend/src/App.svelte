@@ -1,47 +1,68 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+  let modes = ["normal"]; // Kezdő üzemmód
+  let availableModes = ["eco", "sport"]; // Hozzáadható üzemmódok
+
+  // Ellenőrizzük, hogy kevesebb mint 3 üzemmód van-e
+  $: canAddMore = modes.length < 3;
 </script>
 
 <main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <h1>Autó fedélzeti számítógép</h1>
+  <div class="modes-container">
+      {#each modes as mode}
+          <button class="mode-button">{mode}</button>
+      {/each}
+      <!-- Csak akkor jelenjen meg a "+" gomb, ha kevesebb mint 3 üzemmód van -->
+      {#if canAddMore}
+          <button class="add-button" on:click={() => {
+              const nextMode = availableModes.shift(); // Következő elérhető mód
+              modes = [...modes, nextMode]; // Új mód hozzáadása
+          }}>
+              +
+          </button>
+      {/if}
   </div>
-  <h1>Vite + Svelte</h1>
-
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+  main {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 2rem;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+  .modes-container {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
   }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
+  .mode-button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: 2px solid #007BFF;
+      background-color: white;
+      color: #007BFF;
+      border-radius: 5px;
+      cursor: pointer;
   }
-  .read-the-docs {
-    color: #888;
+  .mode-button:hover {
+      background-color: #007BFF;
+      color: white;
+  }
+  .add-button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+  }
+  .add-button:hover {
+      background-color: #218838;
   }
 </style>
